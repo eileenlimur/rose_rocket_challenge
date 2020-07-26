@@ -3,8 +3,8 @@ import Day from "./day";
 
 export default function Week(props) {
   return (
-    <tr class="calendar-week">
-      <th scope="row">12 AM</th>
+    <tr className="calendar-week">
+      <th scope="row">{props.hour}</th>
       <Day/>
       <Day/>
       <Day/>

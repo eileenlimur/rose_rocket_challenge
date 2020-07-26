@@ -1,14 +1,20 @@
 import React from "react";
 
 export default function Driver(props) {
-  
+  const driverList = Object.keys(props.drivers).map((driver, index) => {
+    return (
+      <option key={index} value={props.drivers[driver]}>
+        {props.drivers[driver]["name"]}
+      </option>
+    );
+  });
+
   return (
     <form action="#">
-      <label for="driver">Driver: </label>
-      <select name="driver" id="driver">
-        <option value={props.name}>{props.name}</option>
-        <option value={props.name}>{props.name}</option>
+      <label htmlFor="drivers">Driver: </label>
+      <select name="drivers" id="drivers">
+        {driverList}
       </select>
     </form>
-  )
+  );
 }

@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import DayToggle from "./day_toggle";
 import DriverToggle from "./driver_toggle";
 import Calendar from "./Calendar";
+import drivers from "../database/schedule";
 
 export default function App() {
+  const [week, setWeek] = useState(1);
+  const [driver, setDriver] = useState(1)
+
   return (
-    <body class="app">
-      This is rose rocket's coding challenge
-      <div class="selections-bar">
-        <DriverToggle name="Fierce Bob" />
-        <DayToggle week="2"/>
+    <div className="app">
+      <header className="selections-bar">
+        <DriverToggle drivers={drivers}/>
+        <DayToggle week={week}/>
         <p>Print</p>
-      </div>
-      <Calendar />
-    </body>
+      </header>
+      <Calendar schedule={drivers[driver][week]}/>
+    </div>
   );
 }
