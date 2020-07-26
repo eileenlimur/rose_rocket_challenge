@@ -7,7 +7,19 @@
   border-style: dotted;
 }
 
+.blank-block {
+  height: 1.3em;
+}
+
 .schedule-block {
-  height: 60px;
+  height: 3.5em;
   width: 110px;
+}
+
+table tr {
+  display: table-cell;
+}
+
+table tr td {
+  display: block;
 }

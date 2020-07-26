@@ -15,7 +15,7 @@ export default function App() {
         <DayToggle week={week}/>
         <p>Print</p>
       </header>
-      <Calendar schedule={drivers[driver][week]}/>
+      <Calendar schedule={drivers[driver]["schedule"][week]}/>
     </div>
   );
 }
