@@ -1,3 +1,7 @@
+PostgreSQL v 12.3
+
+https://www.enterprisedb.com/postgres-tutorials/connecting-postgresql-using-psql-and-pgadmin
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
