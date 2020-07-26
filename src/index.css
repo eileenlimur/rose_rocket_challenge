@@ -1,8 +1,25 @@
 * {
-  background-color: teal;
+  background-color: #006363;
   color: rgb(210, 210, 210);
 }
 
 .app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   margin: 20px;
+}
+
+.selections-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 80%;
+}
+
+li {
+  list-style: none;
 }

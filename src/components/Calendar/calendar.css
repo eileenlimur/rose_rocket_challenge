@@ -1,0 +1,8 @@
+.calendar-whole {
+  width: 80%;
+}
+
+.calendar-whole * {
+  border-style: dotted;
+}
+

@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function DayToggle(props) {
-  return <div>&lt; {props.day} &gt;</div>;
+  return <div>&lt; Week {props.week} &gt;</div>;
 }

@@ -8,8 +8,9 @@ export default function App() {
     <body class="app">
       This is rose rocket's coding challenge
       <div class="selections-bar">
-        <DayToggle day="Tuesday"/>
         <DriverToggle name="Fierce Bob" />
+        <DayToggle week="2"/>
+        <p>Print</p>
       </div>
       <Calendar />
     </body>

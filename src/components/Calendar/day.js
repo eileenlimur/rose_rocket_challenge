@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Day(props) {
   return (
-    <li>
+    <td>
       Pickup Goods
-    </li>
+    </td>
   )
 }
