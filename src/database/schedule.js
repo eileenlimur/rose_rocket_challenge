@@ -40,7 +40,7 @@ const drivers = {
     schedule: {
       1: {
         1: {
-          12: {
+          11: {
             hours: 1,
             task: "Pickup: Toronto Zoo"
           }

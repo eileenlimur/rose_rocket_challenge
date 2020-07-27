@@ -14,12 +14,13 @@ export default function Calendar(props) {
   const week = days.map((day, index) => {
     const emptyDay = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
     const schedule = props.schedule[index + 1] ? props.schedule[index + 1] : emptyDay;
+    console.log(schedule);
     return (
       <tr>
         <th className="calendar-weekday-header">
           {day}
         </th>
-        <Day key={index} schedule={schedule}/>
+        <Day key={index} id={index} schedule={schedule}/>
       </tr>
     )
   })
