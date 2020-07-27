@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="selections-bar">
-        <DriverToggle drivers={drivers}/>
+        <DriverToggle drivers={drivers} driver={driver}/>
         <DayToggle week={week}/>
         <p>Print</p>
       </header>

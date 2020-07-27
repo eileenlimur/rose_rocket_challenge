@@ -3,17 +3,17 @@
   width: 80%;
 }
 
-.calendar-whole * {
-  border-style: dotted;
-}
 
 .blank-block {
   height: 1.3em;
 }
 
+
 .schedule-block {
   height: 3.5em;
   width: 110px;
+  border-style: dashed;
+  border-width: thin;
 }
 
 table tr {
