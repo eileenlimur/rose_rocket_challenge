@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Hour from "./Hour";
 
 export default function Day(props) {
