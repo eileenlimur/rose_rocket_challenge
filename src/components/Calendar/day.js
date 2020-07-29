@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import Hour from "./hour";
+import Hour from "./Hour";
 
 export default function Day(props) {
   const emptyDay = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];

@@ -3,11 +3,27 @@
   color: rgb(210, 210, 210);
 }
 
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+button {
+  width: 60px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+::placeholder {
+  color: rgb(210, 210, 210);
+}
+
 .app {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  
   margin: 20px;
 }
 
@@ -16,16 +32,33 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
   width: 80%;
 }
 
 .add-task {
-width: 80%;
-margin-top: 30px;
+  width: 80%;
+  margin-top: 30px;
 }
 
-a {
-  text-decoration: none;
+.new-task-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  width: 300px;
+}
+
+.new-task-form * {
+  margin-top: 10px;
+  border-style: dashed;
+  border-color: rgb(210, 210, 210);
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+.error {
+  color: rgb(77, 35, 97);
+  font-style: italic;
   font-weight: bold;
+  border: none;
+  margin: none;
 }
