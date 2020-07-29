@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DayToggle from "./DayToggle";
 import DriverToggle from "./DriverToggle";
 import Calendar from "./Calendar";
@@ -58,7 +58,7 @@ export default function App() {
         {formMode === "show-form" && 
           <NewTask onSave={saveTask}/>}
       </div>
-      <Calendar schedule={schedule[driver]['schedule'][week]} driver={driver} week={week}/>
+      <Calendar schedule={schedule[driver]['schedule'][week] ? schedule[driver]['schedule'][week] : null} driver={driver} week={week}/>
     </div>
   );
   
