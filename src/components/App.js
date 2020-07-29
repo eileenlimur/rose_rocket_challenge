@@ -11,8 +11,6 @@ export default function App() {
   const [formMode, setForm] = useState("hidden");
   const [schedule, setSchedule] = useState(scheduleObj);
 
-  console.log(schedule[1]['schedule']);
-
   const changeDriver = function(driverId) {
     setDriver(driverId);
   }
@@ -40,12 +38,12 @@ export default function App() {
     } else if (updatedSchedule[driver]['schedule'][week]) {
       console.log(2);
       updatedSchedule[driver]['schedule'][week][weekday] = {[timeNum]: {hours: durationNum, task: `${taskType}: ${location}`}}
-    }
-    else {
+    } else {
       console.log(3);
       updatedSchedule[driver]['schedule'][week] = {weekday: {time: {hours: duration, task: `${taskType}: ${location}`}}}
     }
-    setSchedule(updatedSchedule);
+    console.log(updatedSchedule);
+    setSchedule({...updatedSchedule});
   }
 
   return (
@@ -60,7 +58,7 @@ export default function App() {
         {formMode === "show-form" && 
           <NewTask onSave={saveTask}/>}
       </div>
-      <Calendar schedule={schedule[driver]["schedule"][week]}/>
+      <Calendar schedule={schedule[driver]['schedule'][week]} driver={driver} week={week}/>
     </div>
   );
   

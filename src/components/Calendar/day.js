@@ -1,28 +1,16 @@
-import React, { useState, useEffect} from "react";
+import React, { useState } from "react";
 import Hour from "./Hour";
 
 export default function Day(props) {
-  const emptyDay = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-  
-  //TASKS is an array of all the day's tasks with empty strings as placeholders in empty cells
-  const [tasks, setTasks] = useState(emptyDay);
-  //DAY is an array of Day components created using TASKS
-  const [day, setDay] = useState([]);
-  
-  useEffect(() => {
-    setTasks(prev=>[...prev], emptyDay);
-    if (!Array.isArray(props.schedule)) {
-      Object.keys(props.schedule).forEach((key) => {
-        const nextTask = props.schedule[key]['task'];
-        const newTasks = tasks;
-        newTasks[key] = nextTask;
-        setTasks(prev=>[...prev], newTasks);
-      })
-    }
+  let tasks = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
 
-    const daySched = tasks.map((event, index) => <Hour key={index} contents={event}/>);
-    setDay(daySched);
-  }, [props.schedule])
+  if (props.schedule !== null) {
+    Object.keys(props.schedule).map(key => {
+      tasks[key] = props.schedule[key]['task'];
+    })
+  }
   
+  const day = tasks.map((event, index) => <Hour key={index} contents={event}/>)
+
   return (<>{day}</>);
 }
