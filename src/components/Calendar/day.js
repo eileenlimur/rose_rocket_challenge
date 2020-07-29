@@ -3,7 +3,7 @@ import Hour from "./Hour";
 
 export default function Day(props) {
   let tasks = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-
+  
   if (props.schedule !== null) {
     Object.keys(props.schedule).map(key => {
       tasks[key] = props.schedule[key]['task'];

@@ -23,3 +23,7 @@ table tr {
 table tr td {
   display: block;
 }
+
+.schedule-block-continued {
+  color: rgba(210, 210, 210, 0.5);
+}
