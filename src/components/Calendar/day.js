@@ -3,24 +3,24 @@ import Hour from "./hour";
 
 export default function Day(props) {
   const emptyDay = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-  const [schedule, setSchedule] = useState(emptyDay);
+  
+  //TASKS is an array of all the day's tasks with empty strings as placeholders in empty cells
+  const [tasks, setTasks] = useState(emptyDay);
+  //DAY is an array of Day components created using TASKS
   const [day, setDay] = useState([]);
   
-
   useEffect(() => {
-    setSchedule(prev=>[...prev], emptyDay);
-    setDay(prev=>[...prev], emptyDay);
-    
+    setTasks(prev=>[...prev], emptyDay);
     if (!Array.isArray(props.schedule)) {
       Object.keys(props.schedule).forEach((key) => {
         const nextTask = props.schedule[key]['task'];
-        const newSched = schedule;
-        newSched[key] = nextTask;
-        setSchedule(prev=>[...prev], newSched);
+        const newTasks = tasks;
+        newTasks[key] = nextTask;
+        setTasks(prev=>[...prev], newTasks);
       })
     }
 
-    const daySched = schedule.map((event, index) => <Hour key={index} contents={event}/>);
+    const daySched = tasks.map((event, index) => <Hour key={index} contents={event}/>);
     setDay(daySched);
   }, [props.schedule])
   

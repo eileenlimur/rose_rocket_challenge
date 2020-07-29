@@ -13,8 +13,7 @@ export default function Calendar(props) {
 
   const week = days.map((day, index) => {
     const emptyDay = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-    const schedule = props.schedule[index + 1] ? props.schedule[index + 1] : emptyDay;
-    console.log(schedule);
+    const schedule = props.schedule && props.schedule[index + 1] ? props.schedule[index + 1] : emptyDay;
     return (
       <tr>
         <th className="calendar-weekday-header">

@@ -1,8 +1,7 @@
 import React from "react";
 
 export default function Driver(props) {
-  console.log(props.drivers);
-  const driverList = Object.keys(props.drivers).map((driver, index) => {
+   const driverList = Object.keys(props.drivers).map((driver, index) => {
     return (
       <option key={index}
         value={props.drivers[driver]["id"]}>
