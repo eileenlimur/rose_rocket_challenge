@@ -1,6 +1,6 @@
 import React from "react";
-import Day from "./Day";
-import Hour from "./Hour";
+import Day from "./day";
+import Hour from "./hour";
 import "./calendar.css";
 
 export default function Calendar(props) {

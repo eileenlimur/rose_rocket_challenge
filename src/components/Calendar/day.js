@@ -1,5 +1,5 @@
 import React from "react";
-import Hour from "./Hour";
+import Hour from "./hour";
 
 export default function Day(props) {
   console.log(props);
