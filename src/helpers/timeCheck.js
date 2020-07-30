@@ -1,4 +1,4 @@
-export default function timeChec(hour, duration) {
+export default function timeCheck(hour, duration) {
   if (hour + duration > 24) {
     return false;
   }

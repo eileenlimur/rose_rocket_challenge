@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import timeCheck from "../helpers/timeCheck";
+
 
 export default function NewTask(props) {
   const [driver, setDriver] = useState(props.driver || "")
-  const [taskType, setTaskType] = useState(props.taskType || "")
+  const [taskType, setTaskType] = useState(props.taskType || "Pickup")
   const [location, setLocation] = useState(props.location || "")
   const [week, setWeek] = useState(props.week || "")
   const [weekday, setWeekday] = useState(props.weekday || "")
@@ -12,10 +14,14 @@ export default function NewTask(props) {
   const originalData = {weekday: props.weekday, time: props.time};
 
   const validate = (e) => {
-    //stretch goal: check for whole numbers
     e.preventDefault();
-    if (driver === "" || taskType === "" || location === "" || week === "" || weekday === "" || time === "" || duration === "") {
-      setError("error");
+    //stretch goal: check for whole numbers
+    if (timeCheck(time, duration) === false) {
+      setError("time-error")
+      return;
+    }
+    if (driver === "" || taskType === "" || location === "" || week === "" || week <= 0 || week > 52 || weekday === "" || time === "" || duration === "") {
+      setError("blanks-error");
     } else {
       setError("");
       props.onSave(driver, taskType, location, week, weekday, time, duration, originalData)
@@ -25,16 +31,12 @@ export default function NewTask(props) {
   return (
   <>
     <form className="new-task-form" action="#">
-      {error === "error" &&
-      <p className="error">FIELDS CAN'T BE BLANK</p>}
-
+      {error === "blanks-error" &&
+        <p className="error">FILL ALL FIELDS TO PROCEED</p>}
+      {error === "time-error" &&
+        <p className="error">TASK CAN'T EXTEND INTO NEXT DAY</p>}
+      <label>Driver:</label>
       <select name="drivers" id="drivers" value={driver} onChange={(e)=>setDriver(e.target.value)}>
-        <option
-          disabled=""
-          value=""
-          >
-          Driver:
-        </option>
         <option
           value={1}>
           Fierce Bob
@@ -48,37 +50,35 @@ export default function NewTask(props) {
           Silly Jones
         </option>
       </select>
+      <label>Task Type:</label>
       <select name="tasks" id="tasks" value={taskType} onChange={(e)=>setTaskType(e.target.value)}>
         <option
-          disabled=""
-          value=""
-          >
-          Task Type:
-        </option>
-        <option
           value="Pickup"
-          selected={props.taskType === "Pickup"}
+          selected={taskType === "Pickup"}
           >
           Pickup
         </option>
         <option
           value="Dropoff"
-          selected={props.taskType === "Dropoff"}
+          selected={taskType === "Dropoff"}
           >
           Dropoff
         </option>
         <option
           value="Other"
-          selected={props.taskType === "Other"}
+          selected={taskType === "Other"}
           >
           Other
         </option>
       </select>
+      <label>Task Location/Description:</label>
       <input
-        placeholder={location !== "" ? location : "Task Location/Description:"}
+        placeholder={location !== "" ? location : null}
         value={location}
         onChange={(e)=>setLocation(e.target.value)}/>
-      <input type="number" value={week} onChange={event => setWeek(event.target.value)} id="week" placeholder="Week Number:" min="1" max="52" step="1"/>
+      <label>Week Number:</label>
+      <input type="number" value={week} onChange={event => setWeek(event.target.value)} id="week" min="1" max="52" step="1"/>
+      <label>Day Of Week:</label>
       <select name="weekday" id="weekday" value={weekday} onChange={(e)=>setWeekday(e.target.value)}>
         <option
           disabled=""
@@ -115,8 +115,10 @@ export default function NewTask(props) {
           Saturday
         </option>
       </select>
-      <input type="number" value={time} onChange={event => setTime(event.target.value)} id="time" placeholder="Time (24 hr):" min="0" max="23" step="1"/>
-      <input type="number" value={duration} onChange={event => setDuration(event.target.value)} id="duration" placeholder="Duration (hrs):" min="1" max="24" step="1"/>
+      <label>Time Of Day (24 Hour):</label>
+      <input type="number" value={time} onChange={event => setTime(event.target.value)} id="time" min="0" max="23" step="1"/>
+      <label>Duration Of Task (Hour(s)):</label>
+      <input type="number" value={duration} onChange={event => setDuration(event.target.value)} id="duration" min="1" max="24" step="1"/>
       <button type="submit" onClick={validate}>Submit</button>
     </form>
   </>)

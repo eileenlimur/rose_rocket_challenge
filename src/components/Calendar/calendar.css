@@ -36,7 +36,7 @@ table tr td {
   font-size: 0.7em;
   font-style: bold;
   font-style: italic;
-  color: rgba(51, 31, 169, 0.8);
+  color: rgba(86, 0, 184, 0.995)
 }
 
 .edit-button {
@@ -46,5 +46,5 @@ table tr td {
   font-size: 0.7em;
   font-style: bold;
   font-style: italic;
-  color: rgba(143, 38, 108, 0.8);
+  color: rgba(12, 4, 167, 0.995)
 }

@@ -4,7 +4,9 @@ import DriverToggle from "./DriverToggle";
 import Calendar from "./Calendar";
 import scheduleObj from "../database/schedule";
 import NewTask from "./NewTask";
+import Conflict from "./Conflict";
 import parseSchedule from "../helpers/parseSchedule";
+import conflictCheck from "../helpers/conflictCheck"
 
 export default function App() {
   const [week, setWeek] = useState(1);
@@ -21,6 +23,7 @@ export default function App() {
     duration: "",
     week: ""
   });
+  const [saveConflict, setSaveConflict] = useState(null);
 
   const changeDriver = function (driverId) {
     setDriver(driverId);
@@ -71,7 +74,7 @@ export default function App() {
     }
     setSchedule(prev=>({...prev, ...fakeSched}));
   };
-
+  
   const saveTask = function (
     driver,
     taskType,
@@ -84,6 +87,11 @@ export default function App() {
     const timeNum = Number(time);
     const durationNum = Number(duration);
     let updatedSchedule = {...schedule};
+    const conflictObject = conflictCheck(driver, week, weekday, time, duration, schedule)
+    if (conflictObject) {
+      setSaveConflict(conflictObject);
+      return;
+    }
 
     if (!updatedSchedule[driver]["schedule"][week]) {
       updatedSchedule[driver]["schedule"][week] = {
@@ -95,7 +103,7 @@ export default function App() {
       updatedSchedule[driver]["schedule"][week][weekday] = {
         [timeNum]: { hours: durationNum, task: `${taskType}: ${location}` },
       };
-    } else if (updatedSchedule[driver]["schedule"][week][weekday]) {
+    } else {
       updatedSchedule[driver]["schedule"][week][weekday][timeNum] = {
         hours: durationNum,
         task: `${taskType}: ${location}`,
@@ -184,8 +192,13 @@ export default function App() {
             time={edit.time}
             duration={edit.duration}
           />
-        )}
-      </div>
+          )}
+          </div>
+          {saveConflict &&
+          (
+            <p>Conflict </p>
+          )
+          }
       <Calendar
         schedule={
           parsedSchedule[driver]["schedule"][week]
