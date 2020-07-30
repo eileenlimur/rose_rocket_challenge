@@ -1,12 +1,17 @@
 # Dispatcher
 
-Dispatcher is a simple truck driver dispatch managing app created for the Rose Rocket summer coding challenge.  It records Dropoff, Pickup and Other tasks on a basic calendar interface and allows for editing and deletion. It was made using Create React App and is my first app made from scratch since I began learning to code 3 months ago.
+Dispatcher is a simple truck driver dispatch managing app created for the Rose Rocket summer coding challenge.  It records Dropoff, Pickup and Other tasks on a basic calendar interface and allows for editing and deletion. It was made using Create React App.
 
-Some basic user stories were fulfilled but many were not. The unfulfilled requirements were:
--If a new task conflicts with existing task times, the application should give me the option to overwrite the existing conflicting task(s).
-  -instead the app overwrites without asking
--predicting and preventing edge cases
--all of Part B
+Some user stories were not completed. The unfulfilled requirements were:
+-when a task is being edited, it does not offer the option to overwrite currently existing tasks if the task times overlap
+-no driver spreadsheet report functionality has been added
+
+## Dependencies
+
+-React
+-React-DOM
+-Classnames
+
 
 ## Available Scripts
 
