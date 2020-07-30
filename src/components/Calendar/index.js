@@ -17,7 +17,7 @@ export default function Calendar(props) {
         <th className="calendar-weekday-header">
           {day}
         </th>
-        <Day type="weekday" onEdit={(hour)=>props.onEdit(dayIndex,hour)} key={index} id={index} day={dayIndex} schedule={props.schedule ? (props.schedule[dayIndex] ? props.schedule[dayIndex] : null) : null}/>
+        <Day type="weekday" onEdit={(hour)=>props.onEdit(dayIndex,hour)} onDelete={(hour)=>props.onDelete(dayIndex,hour)} key={index} id={index} day={dayIndex} schedule={props.schedule ? (props.schedule[dayIndex] ? props.schedule[dayIndex] : null) : null}/>
       </tr>
     )
   })

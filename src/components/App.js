@@ -10,9 +10,9 @@ export default function App() {
   const [week, setWeek] = useState(1);
   const [driver, setDriver] = useState(1);
   const [formMode, setForm] = useState("hidden");
-  const [schedule, setSchedule] = useState(scheduleObj);
   //parsed schedule renders calendar including blocks ocucpied by multi-hour tasks
-  const [parsedSchedule, setParsedSchedule] = useState(scheduleObj);
+  const [schedule, setSchedule] = useState({...scheduleObj});
+  const [parsedSchedule, setParsedSchedule] = useState({...scheduleObj});
   const [edit, setEdit] = useState({
     taskType: "",
     location: "",
@@ -32,8 +32,11 @@ export default function App() {
   };
   const toggleForm = function (edit) {
     if (edit === true) {
-      setForm("edit-form");
-      return;
+      if (formMode === "edit-form") {
+        setForm("show-form");
+      } else {
+        setForm("edit-form");
+      }
     } else {
       if (formMode === "hidden") {
         setForm("show-form");
@@ -42,11 +45,20 @@ export default function App() {
       }
     }
   };
-  const editTask = function (day, hour) {
-    console.log(day, hour);
-    const editObj = {taskType: schedule[driver]["schedule"][week][day][hour]["task"].split(": ")[0], location: schedule[driver]["schedule"][week][day][hour]["task"].split(": ")[1], weekday: day, time: hour, duration: schedule[driver]["schedule"][week][day][hour]['hours'], week: week}
-    setEdit(prev=> ({...prev, ...editObj}))
-    toggleForm(true);
+  const editTask = function(day, hour, deleteBoolean) {
+    const fakeSched = {...schedule}
+    const editObj = {taskType: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[0], location: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[1], weekday: day, time: hour, duration: fakeSched[driver]["schedule"][week][day][hour]['hours'], week: week}
+    const hoursToDelete = fakeSched[driver]["schedule"][week][day][hour]['hours'];
+    delete fakeSched[driver]["schedule"][week][day][hour]
+    for (let i = 1; i < hoursToDelete; i++) {
+      delete fakeSched[driver]["schedule"][week][day][hour + i]
+    }
+    if (deleteBoolean === false) {
+      setEdit(prev=> ({...prev, ...editObj}))
+      toggleForm(true);
+      window.scrollTo(0, 0);
+    }
+    setSchedule(prev=>({...prev, ...fakeSched}));
   }
   const saveTask = function (
     driver,
@@ -59,22 +71,19 @@ export default function App() {
   ) {
     const timeNum = Number(time);
     const durationNum = Number(duration);
-    let updatedSchedule = schedule;
+    let updatedSchedule = {...schedule};
 
     if (!updatedSchedule[driver]["schedule"][week]) {
-      console.log(0);
       updatedSchedule[driver]["schedule"][week] = {
         [weekday]: {
           [timeNum]: { hours: durationNum, task: `${taskType}: ${location}` },
         },
       };
     } else if (!updatedSchedule[driver]["schedule"][week][weekday]) {
-      console.log(2);
       updatedSchedule[driver]["schedule"][week][weekday] = {
         [timeNum]: { hours: durationNum, task: `${taskType}: ${location}` },
       };
     } else if (updatedSchedule[driver]["schedule"][week][weekday]) {
-      console.log(1);
       updatedSchedule[driver]["schedule"][week][weekday][timeNum] = {
         hours: durationNum,
         task: `${taskType}: ${location}`,
@@ -84,8 +93,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    console.log(schedule[1]);
-    setParsedSchedule(() => parseSchedule(schedule));
+    const parsedSched = parseSchedule({...schedule});
+    setParsedSchedule(prev=>({...prev, ...parsedSched}));
   }, [schedule]);
 
   return (
@@ -136,8 +145,8 @@ export default function App() {
             ? parsedSchedule[driver]["schedule"][week]
             : null
         }
-        onEdit={(day, hour) => editTask(day, hour)}
-        onDelete={(e) => console.log(e.target.value)}
+        onEdit={(day, hour) => editTask(day, hour, false)}
+        onDelete={(day, hour) => editTask(day, hour, true)}
         week={week}
       />
     </div>
