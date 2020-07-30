@@ -14,7 +14,7 @@ export default function Conflict(props) {
       {/* <p><u>2</u></p> */}
 
       <p>Conflict booking:</p>
-      <p><em><u>{props.conflictObj.conflictTask}</u></em></p>
+      <p><em><u>{props.conflictObj.conflictTaskType}: {props.conflictObj.conflictLocation}</u></em></p>
       {/* <p><em><u>Other: Pickup: Going to the docks</u></em></p><br/> */}
       <p><em>Edit the dispatch form or pick one of <br/>the following options to proceed.</em></p>
       <div class="conflict-resolution-button-container">
