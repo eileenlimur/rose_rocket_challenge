@@ -2,7 +2,6 @@ import React from "react";
 import Hour from "./hour";
 
 export default function Day(props) {
-  console.log(props);
   let tasks = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
   
   if (props.schedule !== null) {

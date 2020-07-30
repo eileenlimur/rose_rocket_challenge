@@ -9,7 +9,6 @@ export default function NewTask(props) {
   const [time, setTime] = useState(props.time || "")
   const [duration, setDuration] = useState(props.duration || "")
   const [error, setError] = useState("")
-  console.log(taskType, duration);
 
   const validate = (e) => {
     //stretch goal: check for whole numbers

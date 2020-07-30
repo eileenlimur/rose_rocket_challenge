@@ -10,8 +10,8 @@ export default function App() {
   const [week, setWeek] = useState(1);
   const [driver, setDriver] = useState(1);
   const [formMode, setForm] = useState("hidden");
-  //parsed schedule renders calendar including blocks ocucpied by multi-hour tasks
   const [schedule, setSchedule] = useState({...scheduleObj});
+  //parsed schedule renders calendar including blocks ocucpied by multi-hour tasks
   const [parsedSchedule, setParsedSchedule] = useState({...scheduleObj});
   const [edit, setEdit] = useState({
     taskType: "",
@@ -90,6 +90,7 @@ export default function App() {
       };
     }
     setSchedule(prev => ({ ...prev, ...updatedSchedule }));
+    toggleForm(false);
   };
 
   useEffect(() => {
