@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 
 export default function NewTask(props) {
-  const [driver, setDriver] = useState("")
-  const [taskType, setTaskType] = useState("")
-  const [location, setLocation] = useState("")
-  const [week, setWeek] = useState("")
-  const [weekday, setWeekday] = useState("")
-  const [time, setTime] = useState("")
-  const [duration, setDuration] = useState("")
+  const [driver, setDriver] = useState(props.driver || "")
+  const [taskType, setTaskType] = useState(props.taskType || "")
+  const [location, setLocation] = useState(props.location || "")
+  const [week, setWeek] = useState(props.week || "")
+  const [weekday, setWeekday] = useState(props.weekday || "")
+  const [time, setTime] = useState(props.time || "")
+  const [duration, setDuration] = useState(props.duration || "")
   const [error, setError] = useState("")
+  console.log(taskType, duration);
 
   const validate = (e) => {
     //stretch goal: check for whole numbers
@@ -55,20 +56,26 @@ export default function NewTask(props) {
           Task Type:
         </option>
         <option
-          value="Pickup">
+          value="Pickup"
+          selected={props.taskType === "Pickup"}
+          >
           Pickup
         </option>
         <option
-          value="Dropoff">
+          value="Dropoff"
+          selected={props.taskType === "Dropoff"}
+          >
           Dropoff
         </option>
         <option
-          value="Other">
+          value="Other"
+          selected={props.taskType === "Other"}
+          >
           Other
         </option>
       </select>
       <input
-        placeholder="Task Location/Description:"
+        placeholder={location !== "" ? location : "Task Location/Description:"}
         value={location}
         onChange={(e)=>setLocation(e.target.value)}/>
       <input type="number" value={week} onChange={event => setWeek(event.target.value)} id="week" placeholder="Week Number:" min="1" max="52" step="1"/>

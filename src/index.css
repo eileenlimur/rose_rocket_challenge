@@ -3,9 +3,10 @@
   color: rgb(210, 210, 210);
 }
 
-a {
+a, button {
   text-decoration: none;
   font-weight: bold;
+  cursor: pointer;
 }
 
 

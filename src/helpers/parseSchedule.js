@@ -1,6 +1,5 @@
 export default function parseSchedule(unparsedSchedule) {
   let parsedSchedule = { ...unparsedSchedule };
-  console.log(parsedSchedule);
   for (let driverKey in parsedSchedule) {
     if (Object.keys(parsedSchedule[driverKey]["schedule"]).length > 0) {
       for (let weekKey in parsedSchedule[driverKey]["schedule"]) {

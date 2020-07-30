@@ -10,6 +10,12 @@ export default function Hour(props) {
   return (
     <td className={hourClass}>
       {props.contents}
+      {props.contents !== "" && props.weekday === false && !props.contents.includes("Cont'd") &&
+      <>
+        <a className="edit-button" onClick = {props.onEdit} >Edit</a>
+        <a className="delete-button" onClick = {props.onDelete} >Delete</a>
+      </>
+      }
     </td>
   )
 }

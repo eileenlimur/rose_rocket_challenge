@@ -14,6 +14,7 @@
   width: 110px;
   border-style: dashed;
   border-width: thin;
+  position: relative;
 }
 
 table tr {
@@ -26,4 +27,24 @@ table tr td {
 
 .schedule-block-continued {
   color: rgba(210, 210, 210, 0.5);
+}
+
+.delete-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.7em;
+  font-style: bold;
+  font-style: italic;
+  color: rgba(51, 31, 169, 0.8);
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 20%;
+  right: 0;
+  font-size: 0.7em;
+  font-style: bold;
+  font-style: italic;
+  color: rgba(143, 38, 108, 0.8);
 }

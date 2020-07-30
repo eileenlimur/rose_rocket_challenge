@@ -2,6 +2,7 @@ import React from "react";
 import Hour from "./Hour";
 
 export default function Day(props) {
+  console.log(props);
   let tasks = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
   
   if (props.schedule !== null) {
@@ -10,7 +11,7 @@ export default function Day(props) {
     })
   }
   
-  const day = tasks.map((event, index) => <Hour key={index} contents={event}/>)
+  const day = tasks.map((event, index) => <Hour key={index} contents={event} onEdit = {()=>props.onEdit(index)} onDelete = {props.onDelete} weekday={props.weekday ? true : false}/>)
 
   return (<>{day}</>);
 }
