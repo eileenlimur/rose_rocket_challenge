@@ -1,6 +1,6 @@
 # Dispatcher
 
-Dispatcher is a simple truck driver dispatch managing app made using React. It was created for the Rose Rocket summer coding challenge. 
+Dispatcher is a simple truck driver dispatch management app made using React. It was created for the Rose Rocket summer coding challenge. 
 
 Dispatcher records Dropoff, Pickup and Other tasks on a basic calendar interface and allows for editing and deletion. It allows users to interact with calendars for 3 different drivers over a span of 52 numbered weeks.
 
