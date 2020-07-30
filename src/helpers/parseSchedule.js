@@ -11,7 +11,7 @@ export default function parseSchedule(unparsedSchedule) {
                 const duration = Number(parsedSchedule[driverKey]["schedule"][weekKey][dayKey][hourKey]["hours"]);
                 if (duration > 1) {
                   for (let i = 1; i < duration; i++ ) {
-                    parsedSchedule[driverKey]["schedule"][weekKey][dayKey][Number(hourKey) + i] = { task: `Cont'd: ${task}`};
+                    parsedSchedule[driverKey]["schedule"][weekKey][dayKey][Number(hourKey) + i] = { task: `More: ${task}`};
                   }
                 }
               }

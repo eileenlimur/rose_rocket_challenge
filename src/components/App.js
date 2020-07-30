@@ -42,24 +42,36 @@ export default function App() {
         setForm("show-form");
       } else {
         setForm("hidden");
+        setEdit({
+          taskType: "",
+          location: "",
+          weekday: "",
+          time: "",
+          duration: "",
+          week: ""
+        });
       }
     }
   };
-  const editTask = function(day, hour, deleteBoolean) {
+  const editTask = function(day, hour) {
     const fakeSched = {...schedule}
     const editObj = {taskType: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[0], location: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[1], weekday: day, time: hour, duration: fakeSched[driver]["schedule"][week][day][hour]['hours'], week: week}
+    setEdit(prev=> ({...prev, ...editObj}))
+    toggleForm(true);
+    window.scrollTo(0, 0);
+    setSchedule(prev=>({...prev, ...fakeSched}));
+  }
+
+  const deleteTask = function(day, hour) {
+    const fakeSched = {...schedule}
     const hoursToDelete = fakeSched[driver]["schedule"][week][day][hour]['hours'];
     delete fakeSched[driver]["schedule"][week][day][hour]
     for (let i = 1; i < hoursToDelete; i++) {
       delete fakeSched[driver]["schedule"][week][day][hour + i]
     }
-    if (deleteBoolean === false) {
-      setEdit(prev=> ({...prev, ...editObj}))
-      toggleForm(true);
-      window.scrollTo(0, 0);
-    }
     setSchedule(prev=>({...prev, ...fakeSched}));
-  }
+  };
+
   const saveTask = function (
     driver,
     taskType,
@@ -73,6 +85,40 @@ export default function App() {
     const durationNum = Number(duration);
     let updatedSchedule = {...schedule};
 
+    if (!updatedSchedule[driver]["schedule"][week]) {
+      updatedSchedule[driver]["schedule"][week] = {
+        [weekday]: {
+          [timeNum]: { hours: durationNum, task: `${taskType}: ${location}` },
+        },
+      };
+    } else if (!updatedSchedule[driver]["schedule"][week][weekday]) {
+      updatedSchedule[driver]["schedule"][week][weekday] = {
+        [timeNum]: { hours: durationNum, task: `${taskType}: ${location}` },
+      };
+    } else if (updatedSchedule[driver]["schedule"][week][weekday]) {
+      updatedSchedule[driver]["schedule"][week][weekday][timeNum] = {
+        hours: durationNum,
+        task: `${taskType}: ${location}`,
+      };
+    }
+    setSchedule(prev => ({ ...prev, ...updatedSchedule }));
+    toggleForm(false);
+  };
+
+  const saveAndDeleteTask = function (
+    driver,
+    taskType,
+    location,
+    week,
+    weekday,
+    time,
+    duration,
+    originalData
+  ) {
+    const timeNum = Number(time);
+    const durationNum = Number(duration);
+    let updatedSchedule = {...schedule};
+    deleteTask(originalData.weekday, originalData.time)
     if (!updatedSchedule[driver]["schedule"][week]) {
       updatedSchedule[driver]["schedule"][week] = {
         [weekday]: {
@@ -129,7 +175,7 @@ export default function App() {
         )}
           {formMode === "edit-form" && (
           <NewTask
-            onSave={saveTask}
+            onSave={saveAndDeleteTask}
             driver={driver}
             week={edit.week}
             taskType={edit.taskType}
@@ -146,8 +192,8 @@ export default function App() {
             ? parsedSchedule[driver]["schedule"][week]
             : null
         }
-        onEdit={(day, hour) => editTask(day, hour, false)}
-        onDelete={(day, hour) => editTask(day, hour, true)}
+        onEdit={(day, hour) => editTask(day, hour)}
+        onDelete={(day, hour) => deleteTask(day, hour)}
         week={week}
       />
     </div>

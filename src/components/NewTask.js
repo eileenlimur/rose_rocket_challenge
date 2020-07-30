@@ -9,6 +9,7 @@ export default function NewTask(props) {
   const [time, setTime] = useState(props.time || "")
   const [duration, setDuration] = useState(props.duration || "")
   const [error, setError] = useState("")
+  const originalData = {weekday: props.weekday, time: props.time};
 
   const validate = (e) => {
     //stretch goal: check for whole numbers
@@ -17,7 +18,7 @@ export default function NewTask(props) {
       setError("error");
     } else {
       setError("");
-      props.onSave(driver, taskType, location, week, weekday, time, duration)
+      props.onSave(driver, taskType, location, week, weekday, time, duration, originalData)
     }
   }
 
