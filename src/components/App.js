@@ -87,6 +87,38 @@ export default function App() {
     setSchedule((prev) => ({ ...prev, ...fakeSched }));
   };
 
+  const cancelOverwrite = function() {
+    setForm("hidden");
+    setSaveConflict(null);
+  }
+
+  const overwrite = function (driver, week, day, hour, schedule, duration, task, location) {
+    let fakeSched = { ...schedule };
+    let taskStartHour = hour;
+
+    let i = 0;
+    while (fakeSched[driver]["schedule"][week][day][hour - i] && fakeSched[driver]["schedule"][week][day][hour - i]['task'][0] === "M") {
+      taskStartHour = hour - 1 - i
+      i++;
+    }
+
+    const hoursToDelete = fakeSched[driver]["schedule"][week][day][taskStartHour]["hours"];
+    for (let i = 0; i < Number(hoursToDelete); i++) {
+      delete fakeSched[driver]["schedule"][week][day][taskStartHour + i];
+      console.log(fakeSched);
+    }
+    fakeSched[driver]["schedule"][week][day][hour] = {duration: duration, task: `${task}: ${location}`};
+    setSchedule(prev => ({ ...prev, ...fakeSched }));
+    setParsedSchedule(prev => ({ ...prev, ...fakeSched }))
+    setSaveConflict(null);
+    setForm("hidden");
+  }
+
+  const activateOverwrite = function() {
+    overwrite(saveConflict.conflictDriver, saveConflict.conflictWeek, saveConflict.conflictDay, saveConflict.conflictTime, schedule, saveConflict.conflictDuration, saveConflict.conflictTaskType, saveConflict.conflictLocation);
+    console.log(saveConflict);
+  }
+//driver, taskType, location, week, weekday, time, duration, originalData
   const saveTask = function (
     driver,
     taskType,
@@ -105,10 +137,13 @@ export default function App() {
       weekday,
       time,
       duration,
-      schedule
+      schedule,
+      taskType,
+      location
     );
     if (conflictObject) {
-      setSaveConflict(conflictObject);
+      setSaveConflict(prev=>({...prev, ...conflictObject}));
+      console.log(saveConflict);
       return;
     }
 
@@ -128,7 +163,7 @@ export default function App() {
         task: `${taskType}: ${location}`,
       };
     }
-    setSchedule((prev) => ({ ...prev, ...updatedSchedule }));
+    setSchedule(prev => ({ ...prev, ...updatedSchedule }));
     toggleForm(false);
   };
 
@@ -213,10 +248,13 @@ export default function App() {
           />
         )}
       </div>
-      {/* {saveConflict && */}
-      <Conflict conflictObj={saveConflict}
+      {saveConflict &&
+      <Conflict
+        conflictObj={saveConflict}
+        overWrite={activateOverwrite}
+        cancel={cancelOverwrite}
       />
-      {/* } */}
+      }
       <Calendar
         schedule={
           parsedSchedule[driver]["schedule"][week]

@@ -120,4 +120,6 @@ button {
   font-style: bold;
   padding: 2px;
   margin: 7px;
+  font: 13.3333px Arial;
+  font-weight: bold;
 }

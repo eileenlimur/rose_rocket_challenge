@@ -12,8 +12,10 @@ export default function NewTask(props) {
   const [duration, setDuration] = useState(props.duration || "")
   const [error, setError] = useState("")
   const originalData = {weekday: props.weekday, time: props.time};
+  console.log(location);
 
   const validate = (e) => {
+    console.log('hit');
     e.preventDefault();
     //stretch goal: check for whole numbers
     if (timeCheck(time, duration) === false) {
