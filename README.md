@@ -23,4 +23,6 @@ Dispatcher records Dropoff, Pickup and Other tasks on a basic calendar interface
 
 ## Run The App
 
-run `npm start` to run the app in the development mode on [http://localhost:3000](http://localhost:3000).
+1. run `npm install` to install project dependencies
+
+2. run `npm start` to run the app in the development mode on [http://localhost:3000](http://localhost:3000).
