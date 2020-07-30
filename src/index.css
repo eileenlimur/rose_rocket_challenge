@@ -34,16 +34,20 @@ button {
   justify-content: space-between;
   align-items: center;
   width: 80%;
+  padding-bottom: 10px;
+  border-bottom: solid;
+  border-width: 3px;
 }
 
 .add-task {
   width: 80%;
   margin-top: 30px;
 }
+
 .new-text-form-container {
-display: flex;
-flex-direction: column;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .new-task-form {
@@ -83,4 +87,37 @@ justify-content: center;
   font-weight: bold;
   border: none;
   margin: none;
+}
+
+.conflict-actions {
+  position: absolute;
+  top: 12%;
+  right: 30%;
+}
+
+.conflict-resolution {
+  margin-top: 15px;
+  border-style: dashed;
+  border-color: rgb(148, 179, 255);
+  border-width: 1px;
+  border-radius: 5px;
+
+  padding: 10px;
+}
+
+.conflict-resolution-button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.conflict-resolution-button {
+  border-color: rgb(158, 9, 181);
+  border-style: dashed;
+  border-width: 1px;
+  border-radius: 5px;
+
+  cursor: pointer;
+  font-style: bold;
+  padding: 2px;
+  margin: 7px;
 }

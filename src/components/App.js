@@ -6,22 +6,22 @@ import scheduleObj from "../database/schedule";
 import NewTask from "./NewTask";
 import Conflict from "./Conflict";
 import parseSchedule from "../helpers/parseSchedule";
-import conflictCheck from "../helpers/conflictCheck"
+import conflictCheck from "../helpers/conflictCheck";
 
 export default function App() {
   const [week, setWeek] = useState(1);
   const [driver, setDriver] = useState(1);
   const [formMode, setForm] = useState("hidden");
-  const [schedule, setSchedule] = useState({...scheduleObj});
+  const [schedule, setSchedule] = useState({ ...scheduleObj });
   //parsed schedule renders calendar including blocks ocucpied by multi-hour tasks
-  const [parsedSchedule, setParsedSchedule] = useState({...scheduleObj});
+  const [parsedSchedule, setParsedSchedule] = useState({ ...scheduleObj });
   const [edit, setEdit] = useState({
     taskType: "",
     location: "",
     weekday: "",
     time: "",
     duration: "",
-    week: ""
+    week: "",
   });
   const [saveConflict, setSaveConflict] = useState(null);
 
@@ -51,30 +51,42 @@ export default function App() {
           weekday: "",
           time: "",
           duration: "",
-          week: ""
+          week: "",
         });
       }
     }
   };
-  const editTask = function(day, hour) {
-    const fakeSched = {...schedule}
-    const editObj = {taskType: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[0], location: fakeSched[driver]["schedule"][week][day][hour]["task"].split(": ")[1], weekday: day, time: hour, duration: fakeSched[driver]["schedule"][week][day][hour]['hours'], week: week}
-    setEdit(prev=> ({...prev, ...editObj}))
+  const editTask = function (day, hour) {
+    const fakeSched = { ...schedule };
+    const editObj = {
+      taskType: fakeSched[driver]["schedule"][week][day][hour]["task"].split(
+        ": "
+      )[0],
+      location: fakeSched[driver]["schedule"][week][day][hour]["task"].split(
+        ": "
+      )[1],
+      weekday: day,
+      time: hour,
+      duration: fakeSched[driver]["schedule"][week][day][hour]["hours"],
+      week: week,
+    };
+    setEdit((prev) => ({ ...prev, ...editObj }));
     toggleForm(true);
     window.scrollTo(0, 0);
-    setSchedule(prev=>({...prev, ...fakeSched}));
-  }
-
-  const deleteTask = function(day, hour) {
-    const fakeSched = {...schedule}
-    const hoursToDelete = fakeSched[driver]["schedule"][week][day][hour]['hours'];
-    delete fakeSched[driver]["schedule"][week][day][hour]
-    for (let i = 1; i < hoursToDelete; i++) {
-      delete fakeSched[driver]["schedule"][week][day][hour + i]
-    }
-    setSchedule(prev=>({...prev, ...fakeSched}));
+    setSchedule((prev) => ({ ...prev, ...fakeSched }));
   };
-  
+
+  const deleteTask = function (day, hour) {
+    const fakeSched = { ...schedule };
+    const hoursToDelete =
+      fakeSched[driver]["schedule"][week][day][hour]["hours"];
+    delete fakeSched[driver]["schedule"][week][day][hour];
+    for (let i = 1; i < hoursToDelete; i++) {
+      delete fakeSched[driver]["schedule"][week][day][hour + i];
+    }
+    setSchedule((prev) => ({ ...prev, ...fakeSched }));
+  };
+
   const saveTask = function (
     driver,
     taskType,
@@ -86,8 +98,15 @@ export default function App() {
   ) {
     const timeNum = Number(time);
     const durationNum = Number(duration);
-    let updatedSchedule = {...schedule};
-    const conflictObject = conflictCheck(driver, week, weekday, time, duration, schedule)
+    let updatedSchedule = { ...schedule };
+    const conflictObject = conflictCheck(
+      driver,
+      week,
+      weekday,
+      time,
+      duration,
+      schedule
+    );
     if (conflictObject) {
       setSaveConflict(conflictObject);
       return;
@@ -109,7 +128,7 @@ export default function App() {
         task: `${taskType}: ${location}`,
       };
     }
-    setSchedule(prev => ({ ...prev, ...updatedSchedule }));
+    setSchedule((prev) => ({ ...prev, ...updatedSchedule }));
     toggleForm(false);
   };
 
@@ -125,8 +144,8 @@ export default function App() {
   ) {
     const timeNum = Number(time);
     const durationNum = Number(duration);
-    let updatedSchedule = {...schedule};
-    deleteTask(originalData.weekday, originalData.time)
+    let updatedSchedule = { ...schedule };
+    deleteTask(originalData.weekday, originalData.time);
     if (!updatedSchedule[driver]["schedule"][week]) {
       updatedSchedule[driver]["schedule"][week] = {
         [weekday]: {
@@ -143,13 +162,13 @@ export default function App() {
         task: `${taskType}: ${location}`,
       };
     }
-    setSchedule(prev => ({ ...prev, ...updatedSchedule }));
+    setSchedule((prev) => ({ ...prev, ...updatedSchedule }));
     toggleForm(false);
   };
 
   useEffect(() => {
-    const parsedSched = parseSchedule({...schedule});
-    setParsedSchedule(prev=>({...prev, ...parsedSched}));
+    const parsedSched = parseSchedule({ ...schedule });
+    setParsedSchedule((prev) => ({ ...prev, ...parsedSched }));
   }, [schedule]);
 
   return (
@@ -166,7 +185,7 @@ export default function App() {
         </a>
       </header>
       <div className="add-task">
-        <a onClick={()=>toggleForm(false)}>
+        <a onClick={() => toggleForm(false)}>
           <em>Add Task</em>
         </a>
         {formMode === "show-form" && (
@@ -181,7 +200,7 @@ export default function App() {
             duration={edit.duration}
           />
         )}
-          {formMode === "edit-form" && (
+        {formMode === "edit-form" && (
           <NewTask
             onSave={saveAndDeleteTask}
             driver={driver}
@@ -192,13 +211,12 @@ export default function App() {
             time={edit.time}
             duration={edit.duration}
           />
-          )}
-          </div>
-          {saveConflict &&
-          (
-            <p>Conflict </p>
-          )
-          }
+        )}
+      </div>
+      {/* {saveConflict && */}
+      <Conflict conflictObj={saveConflict}
+      />
+      {/* } */}
       <Calendar
         schedule={
           parsedSchedule[driver]["schedule"][week]
